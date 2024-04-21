@@ -41,10 +41,11 @@ public class ClientService {
             if (isNameValid(name)) {
                 return name;
             } else {
-                System.out.println("Invalid input. Please enter a valid name. "
-                        + "Make sure that the name contains 3 or more characters "
-                        + "and only Latin letters - no Cyrillic, numbers or special characters, "
-                        + "except for the hyphen, as it is used when writing a double name or surname.");
+                System.out.println("""
+                    Invalid input. Please enter a valid name. Make sure that the name contains 3 or more characters
+                    and only Latin letters - no Cyrillic, numbers or special characters,
+                    except for the hyphen, as it is used when writing a double name or surname.
+                    """);
             }
         }
     }
