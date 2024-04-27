@@ -6,7 +6,7 @@ import main.java.com.magicvet.model.Pet;
 
 public class PetService {
 
-    private static String DOG_TYPE = "dog";
+    private static final String DOG_TYPE = "dog";
 
     public Pet registerNewPet() {
         Pet pet;
@@ -24,12 +24,13 @@ public class PetService {
         Pet pet = buildPet(DOG_TYPE);
         Dog dog = petToDog(pet);
         System.out.print("Size (XS / S / M / L / XXL): ");
-        dog.setSize(Main.SCANNER.nextLine());
+        dog.setSize(Main.SCANNER.nextLine().toUpperCase());
         return dog;
     }
 
     private Dog petToDog(Pet pet) {
         Dog dog = new Dog();
+        dog.setType(pet.getType());
         dog.setAge(pet.getAge());
         dog.setName(pet.getName());
         dog.setSex(pet.getSex());
@@ -43,8 +44,11 @@ public class PetService {
         pet.setAge(Main.SCANNER.nextLine());
         System.out.print("Name: ");
         pet.setName(Main.SCANNER.nextLine());
-        System.out.print("Sex (male / female): ");
-        pet.setSex(Main.SCANNER.nextLine());
+        System.out.print("Sex: male (m) / female (f) / unknown (u): ");
+        String sex = Main.SCANNER.nextLine();
+        pet.setSex(sex.matches("^(male|m)$") ? "male" :
+                sex.matches("^(female|f)$") ? "female" :
+                        "unknown");
         return pet;
     }
 }

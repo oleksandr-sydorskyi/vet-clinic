@@ -14,36 +14,50 @@ public class ClientService {
 
     public Client registerNewClient() {
         Client client = null;
+        String email;
+        do {
         System.out.println("Please provide client details.");
         System.out.print("Email: ");
-        String email = Main.SCANNER.nextLine();
+        email = Main.SCANNER.nextLine();
+            if (email.equalsIgnoreCase("exit") || email.equalsIgnoreCase("e")) {
+                System.out.println("Exiting program.");
+                break;
+            }
         if (isEmailValid(email)) {
             client = buildClient(email);
-            System.out.println("New client: " + client.getFirstName() + " "
-                    + client.getLastName() + " (" + client.getEmail() + ")");
+            System.out.println("New client registered:");
+            System.out.println("- Name: " + client.getFirstName() + " "
+                    + client.getLastName());
+            System.out.println("- Email: " + client.getEmail());
         } else {
-            System.out.println("Provided email is invalid.");
+            System.out.println("Provided email is invalid. " + "Try again or type 'exit' (e) to exit the program: ");
         }
+        } while (!isEmailValid(email));
         return client;
     }
 
     public void registerPetIfRequested(Client client, PetService petService) {
-        System.out.println("Would you like to register а pet immediately? (yes / no): ");
         String input;
+        boolean isYes;
+        boolean isNo;
         do {
+            System.out.print("Would you like to register a pet? yes (y) / no (n): ");
             input = Main.SCANNER.nextLine().trim().toLowerCase();
-            if (input.equals("yes")) {
+            isYes = input.matches("^(yes|y)$");
+            isNo = input.matches("^(no|n)$");
+            if (isYes) {
                 System.out.println("Adding a new pet.");
                 Pet pet = petService.registerNewPet();
                 client.setPet(pet);
                 pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-                System.out.println("Pet has been added.");
-            } else if (input.equals("no")) {
+                System.out.println("Pet has been added: " + pet);
+            } else if (isNo) {
                 System.out.println("You can register a pet later.");
             } else {
-                System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                System.out.println("Invalid input. Please enter 'yes' (y) or 'no' (n).");
             }
-        } while (!(input.equals("yes") || input.equals("no")));
+        } while (!isYes && !isNo);
+        System.out.println(client);
     }
 
     private static Client buildClient(String email) {
