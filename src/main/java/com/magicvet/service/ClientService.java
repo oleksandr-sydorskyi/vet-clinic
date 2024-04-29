@@ -18,7 +18,7 @@ public class ClientService {
         do {
         System.out.println("Please provide client details.");
         System.out.print("Email: ");
-        email = Main.SCANNER.nextLine();
+        email = Main.SCANNER.nextLine().trim();
             if (email.equalsIgnoreCase("exit") || email.equalsIgnoreCase("e")) {
                 System.out.println("Exiting program.");
                 break;

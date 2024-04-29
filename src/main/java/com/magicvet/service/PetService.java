@@ -45,7 +45,7 @@ public class PetService {
         System.out.print("Name: ");
         pet.setName(Main.SCANNER.nextLine());
         System.out.print("Sex: male (m) / female (f) / unknown (u): ");
-        String sex = Main.SCANNER.nextLine();
+        String sex = Main.SCANNER.nextLine().trim().toLowerCase();
         pet.setSex(sex.matches("^(male|m)$") ? "male" :
                 sex.matches("^(female|f)$") ? "female" :
                         "unknown");
