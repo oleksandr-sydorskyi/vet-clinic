@@ -48,9 +48,11 @@ public class ClientService {
             if (isYes) {
                 System.out.println("Adding a new pet.");
                 Pet pet = petService.registerNewPet();
-                client.setPet(pet);
-                pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-                System.out.println("Pet has been added: " + pet);
+                if (pet != null) {
+                    client.setPet(pet);
+                    pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
+                    System.out.println("Pet has been added.");
+                }
             } else if (isNo) {
                 System.out.println("You can register a pet later.");
             } else {
