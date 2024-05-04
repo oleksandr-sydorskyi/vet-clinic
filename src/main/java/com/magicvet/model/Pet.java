@@ -10,6 +10,13 @@ public abstract class Pet {
     private String name;
     private String ownerName;
 
+    public Pet() { }
+
+    public Pet(String name, String age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public String getType() {
         return type;
     }
