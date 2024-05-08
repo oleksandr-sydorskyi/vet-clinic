@@ -35,8 +35,9 @@ public class PetService {
                 sex.matches("^(female|f)$") ? "female" :
                         "unknown");
         if (type.equals(DOG_TYPE)) {
-            System.out.println("Size (XS / S / M / L / XXL): ");
-            ((Dog) pet).setSize(Main.SCANNER.nextLine().toUpperCase());
+            System.out.println("Size (XS / S / M / L / XL): ");
+            String size = Main.SCANNER.nextLine().toUpperCase();
+            ((Dog) pet).setSize(Dog.Size.valueOf(size));
         }
         return pet;
     }

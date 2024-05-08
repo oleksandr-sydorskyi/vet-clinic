@@ -1,8 +1,5 @@
 package main.java.com.magicvet;
 
-import main.java.com.magicvet.comparator.DogAgeComparator;
-import main.java.com.magicvet.comparator.DogNameComparator;
-import main.java.com.magicvet.comparator.DogSizeComparator;
 import main.java.com.magicvet.model.Dog;
 
 import java.util.Arrays;
@@ -13,13 +10,28 @@ public class Sandbox {
         Comparator<Dog> comparator;
         switch (field.toLowerCase()) {
             case "size":
-                comparator = new DogSizeComparator();
+                comparator = new Comparator<Dog>() {
+                    @Override
+                    public int compare(Dog o1, Dog o2) {
+                        return o1.getSize().getValue() - o2.getSize().getValue();
+                    }
+                };
                 break;
             case "name":
-                comparator = new DogNameComparator();
+                comparator = new Comparator<Dog>() {
+                    @Override
+                    public int compare(Dog o1, Dog o2) {
+                        return o1.toString().compareTo(o2.toString());
+                    }
+                };
                 break;
             case "age":
-                comparator = new DogAgeComparator();
+                comparator = new Comparator<Dog>() {
+                    @Override
+                    public int compare(Dog o1, Dog o2) {
+                        return Integer.parseInt(o1.getAge()) - Integer.parseInt(o2.getAge());
+                    }
+                };
                 break;
             default:
                 System.out.println("Unsupported field for sorting: " + field);
@@ -30,12 +42,12 @@ public class Sandbox {
 
     public static void main(String[] args) {
         Dog[] dogs = {
-                new Dog("Basia", "5", Dog.M),
-                new Dog("Patron", "3", Dog.S),
-                new Dog("Dollar", "1", Dog.XL),
-                new Dog("Reda", "3", Dog.XL),
-                new Dog("Angel", "6", Dog.XS),
-                new Dog("Sunny", "12", Dog.S),
+                new Dog("Basia", "5", Dog.Size.M),
+                new Dog("Patron", "3", Dog.Size.S),
+                new Dog("Dollar", "1", Dog.Size.XL),
+                new Dog("Reda", "3", Dog.Size.XL),
+                new Dog("Angel", "6", Dog.Size.XS),
+                new Dog("Sunny", "12", Dog.Size.S),
         };
 
         sortDogsByField(dogs, "size");
