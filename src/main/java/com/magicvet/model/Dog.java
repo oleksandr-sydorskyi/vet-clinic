@@ -12,8 +12,8 @@ public class Dog extends Pet {
         this.size = size;
     }
 
-    public Dog(String name, String age, Size size) {
-        super(name, age);
+    public Dog(String name, String age, Size size, HealthState healthState) {
+        super(name, age, healthState);
         this.size = size;
     }
 
@@ -21,8 +21,10 @@ public class Dog extends Pet {
         return size;
     }
 
-    public void setSize(Size size) {
-        this.size = size;
+    public void setSize(String size) {
+        this.size = Size.valueOf(
+                size.matches("^(XS|S|M|L|XL)$") ? size : "UNKNOWN"
+        );
     }
 
     public enum Size {
@@ -52,6 +54,7 @@ public class Dog extends Pet {
                 ", sex = " + getSex() +
                 ", age = " + getAge() +
                 ", size = " + getSize() +
+                ", health = " + getHealthState() +
                 ", ownerName = " + getOwnerName() +
                 "}";
     }
