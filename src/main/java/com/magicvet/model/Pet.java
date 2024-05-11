@@ -114,11 +114,12 @@ public abstract class Pet {
                 && Objects.equals(sex, pet.sex)
                 && Objects.equals(age, pet.age)
                 && Objects.equals(name, pet.name)
-                && Objects.equals(ownerName, pet.ownerName);
+                && Objects.equals(ownerName, pet.ownerName)
+                && Objects.equals(healthState, pet.healthState);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, sex, age, name, ownerName);
+        return Objects.hash(type, sex, age, name, ownerName, healthState);
     }
 }

@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 public class Sandbox {
     public static void sortDogsByField(Dog[] dogs, String field) {
+        System.out.println("Sorting dogs by: " + field);
         Comparator<Dog> comparator;
         switch (field.toLowerCase()) {
             case "size":
@@ -46,6 +47,9 @@ public class Sandbox {
                 return;
         }
         Arrays.sort(dogs, comparator);
+        for (Dog dog : dogs) {
+            System.out.println(dog);
+        }
     }
 
     public static void main(String[] args) {
@@ -59,26 +63,8 @@ public class Sandbox {
         };
 
         sortDogsByField(dogs, "size");
-        for (Dog dog : dogs) {
-            System.out.print(dog.getSize() + " ");
-        }
-        System.out.println();
-
         sortDogsByField(dogs, "name");
-        for (Dog dog : dogs) {
-            System.out.print(dog.getName() + " ");
-        }
-        System.out.println();
-
         sortDogsByField(dogs, "age");
-        for (Dog dog : dogs) {
-            System.out.print(dog.getAge() + " ");
-        }
-        System.out.println();
-
         sortDogsByField(dogs, "health");
-        for (Dog dog : dogs) {
-            System.out.print(dog.getHealthState() + " ");
-        }
     }
 }
