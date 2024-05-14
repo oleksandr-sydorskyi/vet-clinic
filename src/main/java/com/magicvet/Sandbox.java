@@ -1,5 +1,6 @@
 package main.java.com.magicvet;
 
+import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 
 import java.util.Arrays;
@@ -66,5 +67,7 @@ public class Sandbox {
         sortDogsByField(dogs, "name");
         sortDogsByField(dogs, "age");
         sortDogsByField(dogs, "health");
+
+        System.out.println(new Cat());
     }
 }

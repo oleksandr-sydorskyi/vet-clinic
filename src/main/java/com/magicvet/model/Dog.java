@@ -56,6 +56,7 @@ public class Dog extends Pet {
                 ", size = " + getSize() +
                 ", health = " + getHealthState() +
                 ", ownerName = " + getOwnerName() +
+                ", registrationDate = " + getRegistrationDate() +
                 "}";
     }
 
