@@ -10,7 +10,7 @@ public class Client {
     private Pet pet;
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = capitalizeFirstLetter(firstName);
     }
 
     public String getFirstName() {
@@ -18,7 +18,7 @@ public class Client {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = capitalizeFirstLetter(lastName);
     }
 
     public String getLastName() {
@@ -39,6 +39,13 @@ public class Client {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 
     @Override

@@ -6,48 +6,47 @@ import main.java.com.magicvet.model.*;
 public class PetService {
 
     public void registerNewPet(Client client) {
-        Pet pet;
-        String input;
-        boolean isYes;
-        boolean isNo;
-        do {
-            System.out.print("Would you like to register a pet? yes (y) / no (n): ");
-            input = Main.SCANNER.nextLine().trim().toLowerCase();
-            isYes = input.matches("^(yes|y)$");
-            isNo = input.matches("^(no|n)$");
-            if (isYes) {
+        String input = getInput("Would you like to register a pet? yes (y) / no (n): ");
+        switch (input) {
+            case "y":
                 System.out.println("Adding a new pet.");
-                pet = buildPet();
+                Pet pet = buildPet();
                 client.setPet(pet);
                 pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
                 System.out.println("Pet has been added.");
-            } else if (isNo) {
+                break;
+            case "n":
                 System.out.println("You can register a pet later.");
-            } else {
-                System.out.println("Invalid input. Please enter 'yes' (y) or 'no' (n).");
-            }
-        } while (!isYes && !isNo);
+                break;
+            default:
+                System.out.println("Invalid input! Please try again. ");
+                registerNewPet(client); // Re-prompt for input
+                return;
+        }
         System.out.println(client);
     }
-
     private Pet buildPet() {
-        System.out.println("Pet type: dog (d) / cat (c) / unknown (u): ");
-        String type = Main.SCANNER.nextLine().trim().toLowerCase();
-        Pet pet = type.matches("^(dog|d)$") ? new Dog() : new Cat();
-        pet.setType(type.matches("^(dog|d)$") ? PetType.DOG :
-                type.matches("^(cat|c)$") ? PetType.CAT : PetType.UNKNOWN);
-        System.out.print("Age: ");
-        pet.setAge(Main.SCANNER.nextLine());
-        System.out.print("Name: ");
-        pet.setName(Main.SCANNER.nextLine());
-        System.out.print("Sex: male (m) / female (f) / unknown (u): ");
-        pet.setSex(Main.SCANNER.nextLine().trim().toLowerCase());
+        PetType petType = getPetType();
+        Pet pet = petType == PetType.DOG ? new Dog() : new Cat();
+        pet.setType(petType);
+        pet.setAge(getInput("Age: "));
+        pet.setName(getInput("Name: "));
+        pet.setSex(getInput("Sex: male (m) / female (f) / unknown (u): "));
         if (pet.getType() == PetType.DOG) {
-            System.out.print("Size (XS / S / M / L / XL): ");
-            ((Dog) pet).setSize(Main.SCANNER.nextLine().trim().toUpperCase());
+            ((Dog) pet).setSize(getInput("Size (XS / S / M / L / XL): "));
         }
-        System.out.print("Health (EXCELLENT (e) / GOOD (g) / POOR (p) / CRITICAL (c)): ");
-        pet.setHealthState(Main.SCANNER.nextLine().trim().toUpperCase());
+        pet.setHealthState(getInput("Health (EXCELLENT (e) / GOOD (g) / POOR (p) / CRITICAL (c)): "));
         return pet;
+    }
+
+    private PetType getPetType() {
+        String type = getInput("Pet type: dog (d) / cat (c) / unknown (u): ");
+        return type.matches("^(dog|d)$") ? PetType.DOG :
+                type.matches("^(cat|c)$") ? PetType.CAT : PetType.UNKNOWN;
+    }
+
+    private String getInput(String prompt) {
+        System.out.print(prompt);
+        return Main.SCANNER.nextLine().trim();
     }
 }

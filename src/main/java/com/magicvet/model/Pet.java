@@ -37,6 +37,7 @@ public abstract class Pet {
     }
 
     public void setSex(String sex) {
+        sex = sex.toLowerCase();
         this.sex = sex.matches("^(male|m)$") ? "male" :
                 sex.matches("^(female|f)$") ? "female" :
                         "UNKNOWN";
@@ -47,7 +48,7 @@ public abstract class Pet {
     }
 
     public void setAge(String age) {
-        this.age = age;
+        this.age = age.matches("\\d+") ? age : "UNKNOWN";
     }
 
     public String getName() {
@@ -55,7 +56,7 @@ public abstract class Pet {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     public String getOwnerName() {
@@ -89,6 +90,7 @@ public abstract class Pet {
     }
 
     public void setHealthState(String health) {
+        health = health.toUpperCase();
         this.healthState = Pet.HealthState.valueOf(
                 health.matches("^(EXCELLENT|E)$") ? "EXCELLENT" :
                         health.matches("^(GOOD|G)$") ? "GOOD" :

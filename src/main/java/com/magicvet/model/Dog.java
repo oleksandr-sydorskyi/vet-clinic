@@ -6,10 +6,7 @@ public class Dog extends Pet {
 
     private Size size;
 
-    public Dog() { }
-
-    public Dog(Size size) {
-        this.size = size;
+    public Dog() {
     }
 
     public Dog(String name, String age, Size size, HealthState healthState) {
@@ -22,6 +19,7 @@ public class Dog extends Pet {
     }
 
     public void setSize(String size) {
+        size = size.toUpperCase();
         this.size = Size.valueOf(
                 size.matches("^(XS|S|M|L|XL)$") ? size : "UNKNOWN"
         );

@@ -11,24 +11,10 @@ public class ClientService {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String NAME_PATTERN = "^[a-zA-Z-]{3,}$";
 
-    public Client registerNewClient() {
-        Client client;
-        System.out.println("Please provide client details.");
-        client = buildClient();
-        System.out.println("New client registered:");
-        System.out.println("- Name: " + client.getFirstName() + " " + client.getLastName());
-        System.out.println("- Email: " + client.getEmail());
-        return client;
-    }
-
     private static Client buildClient() {
         Client client = new Client();
         client.setEmail(getValidInput("Email : ", EMAIL_PATTERN, "(e.g. example@example.com)."));
-        String nameErrorMessage = """
-        Make sure that the name contains 3 or more characters
-        and only Latin letters - no Cyrillic, numbers or special characters,
-        except for the hyphen, as it is used when writing a double name or surname.
-        d""";
+        String nameErrorMessage = "Name must contain 3 or more Latin letters, hyphen (-) is allowed.";
         client.setFirstName(getValidInput("First name: ", NAME_PATTERN, nameErrorMessage));
         client.setLastName(getValidInput("Last name: ",NAME_PATTERN, nameErrorMessage));
         return client;
@@ -41,9 +27,18 @@ public class ClientService {
             if (isValidInput(input, pattern)) {
                 return input;
             } else {
-                System.out.println("The input '" + input + "' is not valid! Please try again. " + errorMessage);
+                System.out.println("Invalid input! Please try again. " + errorMessage);
             }
         }
+    }
+
+    public Client registerNewClient() {
+        System.out.println("Please provide client details.");
+        Client client = buildClient();
+        System.out.println("New client registered:");
+        System.out.println("- Name: " + client.getFirstName() + " " + client.getLastName());
+        System.out.println("- Email: " + client.getEmail());
+        return client;
     }
 
     private static boolean isValidInput(String input, String pattern) {
