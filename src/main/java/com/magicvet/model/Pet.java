@@ -18,9 +18,12 @@ public abstract class Pet {
 
     public Pet() { }
 
-    public Pet(String name, String age, HealthState healthState) {
+    public Pet(PetType type, String name, String age, String sex, String ownerName, HealthState healthState) {
+        this.type = type;
         this.name = name;
         this.age = age;
+        this.sex = sex;
+        this.ownerName = ownerName;
         this.healthState = healthState;
     }
 
