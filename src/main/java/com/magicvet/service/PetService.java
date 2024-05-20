@@ -3,6 +3,9 @@ package main.java.com.magicvet.service;
 import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.*;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class PetService {
 
     public void registerNewPet(Client client) {
@@ -25,6 +28,7 @@ public class PetService {
         }
         System.out.println(client);
     }
+
     private Pet buildPet() {
         PetType petType = getPetType();
         Pet pet = petType == PetType.DOG ? new Dog() : new Cat();
@@ -48,5 +52,24 @@ public class PetService {
     private String getInput(String prompt) {
         System.out.print(prompt);
         return Main.SCANNER.nextLine().trim();
+    }
+
+    public static void sortDogsByField(Dog[] dogs, String field) {
+        Comparator<Dog> comparator;
+        switch (field.toLowerCase()) {
+            case "size" -> comparator = Comparator.comparing(Dog::getSize);
+            case "name" -> comparator = Comparator.comparing(Dog::getName);
+            case "age" -> comparator = Comparator.comparing(dog -> Integer.parseInt(dog.getAge()));
+            case "health" -> comparator = Comparator.comparing(Dog::getHealthState);
+            default -> {
+                System.out.println("Unsupported field for sorting: " + field);
+                return;
+            }
+        }
+        Arrays.sort(dogs, comparator);
+        System.out.println("Sorted by " + field + ":");
+        for (Dog dog : dogs) {
+            System.out.println(dog);
+        }
     }
 }

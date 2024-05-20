@@ -11,6 +11,14 @@ public class ClientService {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String NAME_PATTERN = "^[a-zA-Z-]{3,}$";
 
+    public Client registerNewClient() {
+        System.out.println("Please provide client details.");
+        Client client = buildClient();
+        System.out.println("New client registered:");
+        System.out.println(client);
+        return client;
+    }
+
     private static Client buildClient() {
         Client client = new Client();
         client.setEmail(getValidInput("Email : ", EMAIL_PATTERN, "(e.g. example@example.com)."));
@@ -30,15 +38,6 @@ public class ClientService {
                 System.out.println("Invalid input! Please try again. " + errorMessage);
             }
         }
-    }
-
-    public Client registerNewClient() {
-        System.out.println("Please provide client details.");
-        Client client = buildClient();
-        System.out.println("New client registered:");
-        System.out.println("- Name: " + client.getFirstName() + " " + client.getLastName());
-        System.out.println("- Email: " + client.getEmail());
-        return client;
     }
 
     private static boolean isValidInput(String input, String pattern) {

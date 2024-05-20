@@ -9,8 +9,8 @@ public class Dog extends Pet {
     public Dog() {
     }
 
-    public Dog(String name, String age, Size size, HealthState healthState) {
-        super(name, age, healthState);
+    public Dog(PetType type, String name, String age, String sex, String ownerName, HealthState healthState, Size size) {
+        super(type, name, age, sex, ownerName, healthState);
         this.size = size;
     }
 
