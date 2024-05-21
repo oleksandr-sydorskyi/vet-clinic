@@ -7,10 +7,11 @@ public class Dog extends Pet {
     private Size size;
 
     public Dog() {
+        super.setType(PetType.DOG);
     }
 
-    public Dog(PetType type, String name, String age, String sex, String ownerName, HealthState healthState, Size size) {
-        super(type, name, age, sex, ownerName, healthState);
+    public Dog(String name, String age, String sex, String ownerName, HealthState healthState, Size size) {
+        super(PetType.DOG, name, age, sex, ownerName, healthState);
         this.size = size;
     }
 
@@ -20,9 +21,7 @@ public class Dog extends Pet {
 
     public void setSize(String size) {
         size = size.toUpperCase();
-        this.size = Size.valueOf(
-                size.matches("^(XS|S|M|L|XL)$") ? size : "UNKNOWN"
-        );
+        this.size = size.matches("^(XS|S|M|L|XL)$") ? Size.valueOf(size) : Size.UNKNOWN;
     }
 
     public enum Size {

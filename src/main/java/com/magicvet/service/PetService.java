@@ -12,7 +12,8 @@ public class PetService {
         Comparator<Pet> comparator;
         switch (field.toLowerCase()) {
             case "name" -> comparator = Comparator.comparing(Pet::getName);
-            case "age" -> comparator = Comparator.comparing(pet -> Integer.parseInt(pet.getAge()));
+            case "age" -> comparator = Comparator.comparing(pet -> pet.getAge().equals("UNKNOWN") ? 0
+                    : Integer.parseInt(pet.getAge()));
             case "health" -> comparator = Comparator.comparing(Pet::getHealthState);
             case "type" -> comparator = Comparator.comparing(Pet::getType);
             case "owner" -> comparator = Comparator.comparing(Pet::getOwnerName);
@@ -58,11 +59,10 @@ public class PetService {
     private Pet buildPet() {
         PetType petType = getPetType();
         Pet pet = petType == PetType.DOG ? new Dog() : new Cat();
-        pet.setType(petType);
         pet.setAge(StringUtils.getInput("Age: "));
         pet.setName(StringUtils.getInput("Name: "));
         pet.setSex(StringUtils.getInput("Sex: male (m) / female (f) / unknown (u): "));
-        if (pet.getType() == PetType.DOG) {
+        if (pet instanceof Dog) {
             ((Dog) pet).setSize(StringUtils.getInput("Size (XS / S / M / L / XL): "));
         }
         pet.setHealthState(StringUtils.getInput("Health (EXCELLENT (e) / GOOD (g) / POOR (p) / CRITICAL (c)): "));
