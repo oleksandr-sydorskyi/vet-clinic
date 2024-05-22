@@ -6,8 +6,10 @@ public class StringUtils {
 
     public static String capitalizeFirstLetter(String input) {
         String[] parts = input.split("-");
-        input = Character.toUpperCase(parts[0].charAt(0)) + parts[0].substring(1).toLowerCase();
-        return parts.length == 1 ? input : input + "-" + capitalizeFirstLetter(parts[1]);
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = Character.toUpperCase(parts[i].charAt(0)) + parts[i].substring(1).toLowerCase();
+        }
+        return String.join("-", parts);
     }
 
     public static String getInput(String prompt) {

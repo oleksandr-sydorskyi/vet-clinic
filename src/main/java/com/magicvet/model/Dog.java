@@ -25,12 +25,12 @@ public class Dog extends Pet {
     }
 
     public enum Size {
+        UNKNOWN(0),
         XS(1),
         S(2),
         M(3),
         L(4),
-        XL(5),
-        UNKNOWN(0);
+        XL(5);
 
         private final int value;
 
