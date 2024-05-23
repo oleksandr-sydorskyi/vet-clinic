@@ -35,25 +35,20 @@ public class PetService {
         }
     }
 
-    public void registerNewPet(Client client) {
-        String input = StringUtils.getInput("Would you like to register a pet? yes (y) / no (n): ");
-        switch (input) {
-            case "y":
-                System.out.println("Adding a new pet.");
-                Pet pet = buildPet();
-                client.setPet(pet);
-                pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-                System.out.println("Pet has been added.");
-                break;
-            case "n":
-                System.out.println("You can register a pet later.");
-                break;
-            default:
-                System.out.println("Invalid input! Please try again. ");
-                registerNewPet(client); // Re-prompt for input
-                return;
+    public void registerPets(Client client) {
+        addPet(client);
+        String input = StringUtils.getInput("Do you want to add more pets for the current client? (y/n): ");
+        if (input.equals("y")) {
+            registerPets(client);
         }
-        System.out.println(client);
+    }
+
+    private void addPet(Client client) {
+        System.out.println("Adding a new pet.");
+        Pet pet = buildPet();
+        client.addPet(pet);
+        pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
+        System.out.println("Pet has been added.");
     }
 
     private Pet buildPet() {
@@ -70,8 +65,7 @@ public class PetService {
     }
 
     private PetType getPetType() {
-        String type = StringUtils.getInput("Pet type: dog (d) / cat (c) / unknown (u): ");
-        return type.matches("^(dog|d)$") ? PetType.DOG :
-                type.matches("^(cat|c)$") ? PetType.CAT : PetType.UNKNOWN;
+        String type = StringUtils.getInput("Pet type: dog (d) / cat (c): ");
+        return type.matches("^(dog|d)$") ? PetType.DOG : PetType.CAT;
     }
 }
