@@ -1,7 +1,7 @@
 package main.java.com.magicvet.service;
 
-import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Client;
+import main.java.com.magicvet.utils.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,8 +30,7 @@ public class ClientService {
 
     private static String getValidInput(String prompt, String pattern, String errorMessage) {
         while (true) {
-            System.out.print(prompt);
-            String input = Main.SCANNER.nextLine().trim();
+            String input = StringUtils.getInput(prompt);
             if (isValidInput(input, pattern)) {
                 return input;
             } else {

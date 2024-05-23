@@ -1,24 +1,28 @@
 package main.java.com.magicvet;
 
+import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Client;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
-import main.java.com.magicvet.model.PetType;
 import main.java.com.magicvet.service.PetService;
 
 public class Sandbox {
 
     public static void main(String[] args) {
-        Dog[] dogs = {
-                new Dog(PetType.DOG, "Bella", "12", "female", "John Doe", Pet.HealthState.POOR, Dog.Size.S),
-                new Dog(PetType.DOG, "Charlie", "4", "male", "John Doe", Pet.HealthState.CRITICAL, Dog.Size.XL),
-                new Dog(PetType.DOG, "Daisy", "6", "female", "John Doe", Pet.HealthState.EXCELLENT, Dog.Size.M),
+        Pet[] pets = {
+                new Dog("Bella", "12", "female", "John Doe", Pet.HealthState.POOR, Dog.Size.S),
+                new Dog("Charlie", "4", "male", "Aaron Doe", Pet.HealthState.CRITICAL, Dog.Size.XL),
+                new Dog("Daisy", "UNKNOWN", "female", "Aaron Doe", Pet.HealthState.EXCELLENT, Dog.Size.M),
+                new Cat("Zorro", "2", "male", "John Doe", Pet.HealthState.EXCELLENT),
+                new Cat("Asia", "10", "female", "Daniel Crew", Pet.HealthState.GOOD)
         };
 
-        PetService.sortDogsByField(dogs, "size");
-        PetService.sortDogsByField(dogs, "name");
-        PetService.sortDogsByField(dogs, "age");
-        PetService.sortDogsByField(dogs, "health");
+        PetService.sortPetsByField(pets, "size");
+        PetService.sortPetsByField(pets, "name");
+        PetService.sortPetsByField(pets, "age");
+        PetService.sortPetsByField(pets, "health");
+        PetService.sortPetsByField(pets, "owner");
+        PetService.sortPetsByField(pets, "type");
         System.out.println();
         System.out.println(new Client());
     }

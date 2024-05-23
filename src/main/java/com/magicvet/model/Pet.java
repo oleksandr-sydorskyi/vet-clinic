@@ -1,5 +1,7 @@
 package main.java.com.magicvet.model;
 
+import main.java.com.magicvet.utils.StringUtils;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -59,7 +61,7 @@ public abstract class Pet {
     }
 
     public void setName(String name) {
-        this.name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        this.name = StringUtils.capitalizeFirstLetter(name);
     }
 
     public String getOwnerName() {
@@ -71,11 +73,11 @@ public abstract class Pet {
     }
 
     public enum HealthState {
+        UNKNOWN(0),
         EXCELLENT(1),
         GOOD(2),
         POOR(3),
-        CRITICAL(4),
-        UNKNOWN(0);
+        CRITICAL(4);
 
         private final int value;
 
@@ -94,13 +96,12 @@ public abstract class Pet {
 
     public void setHealthState(String health) {
         health = health.toUpperCase();
-        this.healthState = Pet.HealthState.valueOf(
-                health.matches("^(EXCELLENT|E)$") ? "EXCELLENT" :
-                        health.matches("^(GOOD|G)$") ? "GOOD" :
-                                health.matches("^(POOR|P)$") ? "POOR" :
-                                        health.matches("^(CRITICAL|C)$") ? "CRITICAL" :
-                                                "UNKNOWN"
-        );
+        this.healthState =
+                health.matches("^(EXCELLENT|E)$") ? HealthState.EXCELLENT :
+                        health.matches("^(GOOD|G)$") ? HealthState.GOOD :
+                                health.matches("^(POOR|P)$") ? HealthState.POOR :
+                                        health.matches("^(CRITICAL|C)$") ? HealthState.CRITICAL :
+                                                HealthState.UNKNOWN;
     }
 
     public String getRegistrationDate() {

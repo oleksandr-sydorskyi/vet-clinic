@@ -1,5 +1,7 @@
 package main.java.com.magicvet.model;
 
+import main.java.com.magicvet.utils.StringUtils;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -15,7 +17,7 @@ public class Client {
     private final LocalDateTime registrationDate = LocalDateTime.now();
 
     public void setFirstName(String firstName) {
-        this.firstName = capitalizeFirstLetter(firstName);
+        this.firstName = StringUtils.capitalizeFirstLetter(firstName);
     }
 
     public String getFirstName() {
@@ -23,7 +25,7 @@ public class Client {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = capitalizeFirstLetter(lastName);
+        this.lastName = StringUtils.capitalizeFirstLetter(lastName);
     }
 
     public String getLastName() {
@@ -48,13 +50,6 @@ public class Client {
 
     public String getRegistrationDate() {
         return registrationDate.format(US_AM_PM_FORMATTER);
-    }
-
-    private String capitalizeFirstLetter(String input) {
-        if (input == null || input.isEmpty()) {
-            return input;
-        }
-        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 
     @Override
