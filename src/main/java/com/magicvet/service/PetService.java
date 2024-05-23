@@ -3,12 +3,12 @@ package main.java.com.magicvet.service;
 import main.java.com.magicvet.model.*;
 import main.java.com.magicvet.utils.StringUtils;
 
-import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class PetService {
 
-    public static void sortPetsByField(Pet[] pets, String field) {
+    public static void sortPetsByField(List<Pet> pets, String field) {
         Comparator<Pet> comparator;
         switch (field.toLowerCase()) {
             case "name" -> comparator = Comparator.comparing(Pet::getName);
@@ -17,6 +17,7 @@ public class PetService {
             case "health" -> comparator = Comparator.comparing(Pet::getHealthState);
             case "type" -> comparator = Comparator.comparing(Pet::getType);
             case "owner" -> comparator = Comparator.comparing(Pet::getOwnerName);
+            case "date" -> comparator = Comparator.comparing(Pet::getRegistrationDate);
             case "size" -> comparator = (p1, p2) -> {
                 if (p1 instanceof Dog && p2 instanceof Dog) {
                     return ((Dog) p1).getSize().compareTo(((Dog) p2).getSize());
@@ -28,7 +29,7 @@ public class PetService {
                 return;
             }
         }
-        Arrays.sort(pets, comparator);
+        pets.sort(comparator);
         System.out.println("Sorted by " + field + ":");
         for (Pet pet : pets) {
             System.out.println(pet);
