@@ -1,12 +1,37 @@
 package main.java.com.magicvet.service;
 
-import main.java.com.magicvet.model.*;
+import main.java.com.magicvet.model.Cat;
+import main.java.com.magicvet.model.Dog;
+import main.java.com.magicvet.model.Pet;
+import main.java.com.magicvet.model.PetType;
 import main.java.com.magicvet.utils.StringUtils;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class PetService {
+
+    public Pet registerNewPet() {
+        Pet pet = buildPet(getPetType());
+        return pet;
+    }
+
+    private PetType getPetType() {
+        String type = StringUtils.getInput("Pet type: dog (d) / cat (c): ");
+        return type.matches("^(dog|d)$") ? PetType.DOG : PetType.CAT;
+    }
+
+    public Pet buildPet(PetType type) {
+        Pet pet = type == PetType.DOG ? new Dog() : new Cat();
+        pet.setAge(StringUtils.getInput("Age: "));
+        pet.setName(StringUtils.getInput("Name: "));
+        pet.setSex(StringUtils.getInput("Sex: male (m) / female (f) / unknown (u): "));
+        if (pet instanceof Dog) {
+            ((Dog) pet).setSize(StringUtils.getInput("Size (XS / S / M / L / XL): "));
+        }
+        pet.setHealthState(StringUtils.getInput("Health (EXCELLENT (e) / GOOD (g) / POOR (p) / CRITICAL (c)): "));
+        return pet;
+    }
 
     public static void sortPetsByField(List<Pet> pets, String field) {
         Comparator<Pet> comparator;
@@ -34,39 +59,5 @@ public class PetService {
         for (Pet pet : pets) {
             System.out.println(pet);
         }
-    }
-
-    public void registerPets(Client client) {
-        addPet(client);
-        String input = StringUtils.getInput("Do you want to add more pets for the current client? (y/n): ");
-        if (input.equals("y")) {
-            registerPets(client);
-        }
-    }
-
-    private void addPet(Client client) {
-        System.out.println("Adding a new pet.");
-        Pet pet = buildPet();
-        client.addPet(pet);
-        pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-        System.out.println("Pet has been added.");
-    }
-
-    private Pet buildPet() {
-        PetType petType = getPetType();
-        Pet pet = petType == PetType.DOG ? new Dog() : new Cat();
-        pet.setAge(StringUtils.getInput("Age: "));
-        pet.setName(StringUtils.getInput("Name: "));
-        pet.setSex(StringUtils.getInput("Sex: male (m) / female (f) / unknown (u): "));
-        if (pet instanceof Dog) {
-            ((Dog) pet).setSize(StringUtils.getInput("Size (XS / S / M / L / XL): "));
-        }
-        pet.setHealthState(StringUtils.getInput("Health (EXCELLENT (e) / GOOD (g) / POOR (p) / CRITICAL (c)): "));
-        return pet;
-    }
-
-    private PetType getPetType() {
-        String type = StringUtils.getInput("Pet type: dog (d) / cat (c): ");
-        return type.matches("^(dog|d)$") ? PetType.DOG : PetType.CAT;
     }
 }

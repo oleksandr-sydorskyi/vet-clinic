@@ -1,21 +1,12 @@
 package main.java.com.magicvet.component;
 
-import main.java.com.magicvet.model.Client;
-import main.java.com.magicvet.service.ClientService;
-import main.java.com.magicvet.service.PetService;
-
 public class ApplicationRunner {
 
-    private final ClientService clientService = new ClientService();
-    private final PetService petService = new PetService();
+    private final EntityRegister register = new EntityRegister();
 
     public void run() {
         if (Authenticator.auth()) {
-            Client client = clientService.registerNewClient();
-            if (client != null) {
-                petService.registerPets(client);
-                System.out.println(client);
-            }
+            register.registerClients();
         }
     }
 }
