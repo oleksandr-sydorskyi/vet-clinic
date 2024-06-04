@@ -23,7 +23,7 @@ public class ClientService {
     public Client buildClient() {
         Client client = new Client();
         client.setEmail(getValidInput("Email: ", EMAIL_PATTERN, "(e.g. example@example.com)."));
-        String nameErrorMessage = "Name must contain 3 or more Latin letters, hyphen (-) is allowed.";
+        String nameErrorMessage = "Name must contain 2 or more Latin letters, hyphen (-) is allowed.";
         client.setFirstName(getValidInput("First name: ", NAME_PATTERN, nameErrorMessage));
         client.setLastName(getValidInput("Last name: ",NAME_PATTERN, nameErrorMessage));
         client.setLocation(getValidInput("Location: Kyiv (k) / Lviv (l) / Odesa (o): ", LOCATION_PATTERN, ""));

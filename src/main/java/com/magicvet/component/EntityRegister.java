@@ -21,9 +21,7 @@ public class EntityRegister {
         String message = "Do you want to register more clients? (y/n): ";
         do {
             Client client = addClient();
-            if (client != null) {
-                clients.add(client);
-            }
+            clients.add(client);
         } while (verifyRepeating(message));
         Map<Client.Location, List<Client>> clientsByLocation = groupClients(clients);
         printClients(clientsByLocation);
