@@ -29,6 +29,37 @@ public abstract class Pet {
         this.healthState = healthState;
     }
 
+    @Override
+    public String toString() {
+        return "Pet {" +
+                "type = " + type +
+                ", name = " + name +
+                ", sex = " + sex +
+                ", age = " + age +
+                ", health = " + healthState +
+                ", ownerName = " + ownerName +
+                ", registrationDate = " + registrationDate.format(FORMATTER) +
+                "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return Objects.equals(type, pet.type)
+                && Objects.equals(sex, pet.sex)
+                && Objects.equals(age, pet.age)
+                && Objects.equals(name, pet.name)
+                && Objects.equals(ownerName, pet.ownerName)
+                && Objects.equals(healthState, pet.healthState);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, sex, age, name, ownerName, healthState);
+    }
+
     public PetType getType() {
         return type;
     }
@@ -73,21 +104,11 @@ public abstract class Pet {
     }
 
     public enum HealthState {
-        UNKNOWN(0),
-        EXCELLENT(1),
-        GOOD(2),
-        POOR(3),
-        CRITICAL(4);
-
-        private final int value;
-
-        HealthState(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
+        UNKNOWN,
+        EXCELLENT,
+        GOOD,
+        POOR,
+        CRITICAL
     }
 
     public HealthState getHealthState() {
@@ -106,36 +127,5 @@ public abstract class Pet {
 
     public String getRegistrationDate() {
         return registrationDate.format(FORMATTER);
-    }
-
-    @Override
-    public String toString() {
-        return "Pet {" +
-                "type = " + type +
-                ", name = " + name +
-                ", sex = " + sex +
-                ", age = " + age +
-                ", health = " + healthState +
-                ", ownerName = " + ownerName +
-                ", registrationDate = " + registrationDate.format(FORMATTER) +
-                "}";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pet pet = (Pet) o;
-        return Objects.equals(type, pet.type)
-                && Objects.equals(sex, pet.sex)
-                && Objects.equals(age, pet.age)
-                && Objects.equals(name, pet.name)
-                && Objects.equals(ownerName, pet.ownerName)
-                && Objects.equals(healthState, pet.healthState);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, sex, age, name, ownerName, healthState);
     }
 }

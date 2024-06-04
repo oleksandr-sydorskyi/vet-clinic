@@ -15,34 +15,6 @@ public class Dog extends Pet {
         this.size = size;
     }
 
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        size = size.toUpperCase();
-        this.size = size.matches("^(XS|S|M|L|XL)$") ? Size.valueOf(size) : Size.UNKNOWN;
-    }
-
-    public enum Size {
-        UNKNOWN(0),
-        XS(1),
-        S(2),
-        M(3),
-        L(4),
-        XL(5);
-
-        private final int value;
-
-        Size(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
-    }
-
     @Override
     public String toString() {
         return "Pet {" +
@@ -68,5 +40,18 @@ public class Dog extends Pet {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), size);
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        size = size.toUpperCase();
+        this.size = size.matches("^(XS|S|M|L|XL)$") ? Size.valueOf(size) : Size.UNKNOWN;
+    }
+
+    public enum Size {
+        UNKNOWN, XS, S, M, L, XL
     }
 }
