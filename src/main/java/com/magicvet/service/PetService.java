@@ -12,24 +12,20 @@ import java.util.List;
 public class PetService {
 
     public Pet registerNewPet() {
-        Pet pet = buildPet(getPetType());
+        String type = StringUtils.getInput("Pet type: " + PetType.printPetTypes());
+        Pet pet = buildPet(PetType.getPetTypeFromString(type));
         return pet;
-    }
-
-    private PetType getPetType() {
-        String type = StringUtils.getInput("Pet type: dog (d) / cat (c): ");
-        return type.matches("^(dog|d)$") ? PetType.DOG : PetType.CAT;
     }
 
     public Pet buildPet(PetType type) {
         Pet pet = type == PetType.DOG ? new Dog() : new Cat();
         pet.setAge(StringUtils.getInput("Age: "));
         pet.setName(StringUtils.getInput("Name: "));
-        pet.setSex(StringUtils.getInput("Sex: male (m) / female (f) / unknown (u): "));
+        pet.setSex(StringUtils.getInput("Sex: " + Pet.Sex.printSexes()));
         if (pet instanceof Dog) {
-            ((Dog) pet).setSize(StringUtils.getInput("Size (XS / S / M / L / XL): "));
+            ((Dog) pet).setSize(StringUtils.getInput("Size: " + Dog.Size.printSizes()));
         }
-        pet.setHealthState(StringUtils.getInput("Health (EXCELLENT (e) / GOOD (g) / POOR (p) / CRITICAL (c)): "));
+        pet.setHealthState(StringUtils.getInput("Health: " + Pet.HealthState.printHealth()));
         return pet;
     }
 

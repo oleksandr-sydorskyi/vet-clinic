@@ -11,7 +11,7 @@ public abstract class Pet {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
     private PetType type;
-    private String sex;
+    private Sex sex;
     private String age;
     private String name;
     private String ownerName;
@@ -20,7 +20,7 @@ public abstract class Pet {
 
     public Pet() { }
 
-    public Pet(PetType type, String name, String age, String sex, String ownerName, HealthState healthState) {
+    public Pet(PetType type, String name, String age, Sex sex, String ownerName, HealthState healthState) {
         this.type = type;
         this.name = name;
         this.age = age;
@@ -68,23 +68,29 @@ public abstract class Pet {
         this.type = type;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
     public void setSex(String sex) {
-        sex = sex.toLowerCase();
-        this.sex = sex.matches("^(male|m)$") ? "male" :
-                sex.matches("^(female|f)$") ? "female" :
-                        "UNKNOWN";
+        this.sex = Sex.getSexFromString(sex);
+    }
+
+    public void setAge(String age) {
+        if (age.matches("\\d+")) {
+            this.age = age;
+        } else {
+            this.age = "UNKNOWN";
+            System.out.println("Unable to parse value '" + age + "'. Using default value: UNKNOWN");
+        }
     }
 
     public String getAge() {
         return age;
     }
 
-    public void setAge(String age) {
-        this.age = age.matches("\\d+") ? age : "UNKNOWN";
+    public void setHealthState(String health) {
+        this.healthState = HealthState.getHealthFromString(health);
     }
 
     public String getName() {
@@ -103,26 +109,82 @@ public abstract class Pet {
         this.ownerName = ownerName;
     }
 
-    public enum HealthState {
-        UNKNOWN,
-        EXCELLENT,
-        GOOD,
-        POOR,
-        CRITICAL
+    public enum Sex {
+        MALE("M"),
+        FEMALE("F"),
+        UNKNOWN("U");
+
+        private final String shortForm;
+
+        Sex(String shortForm) {
+            this.shortForm = shortForm;
+        }
+
+        public static String printSexes() {
+            String[] array = new String[Sex.values().length];
+            int i = 0;
+            for (Sex sex : Sex.values()) {
+                array[i++] = sex.name() + " (" + sex.shortForm.toLowerCase() + ")";
+            }
+            return String.join(" / ", array) + ": ";
+        }
+
+        public static Sex getSexFromString(String userInput) {
+            String input = userInput.toUpperCase();
+            for (Sex sex : Sex.values()) {
+                if (sex.name().equals(input) || sex.getShortForm().equals(input)) {
+                    return sex;
+                }
+            }
+            System.out.println("Unable to parse value '" + userInput + "'. Using default value: " + UNKNOWN);
+            return UNKNOWN;
+        }
+
+        public String getShortForm() {
+            return shortForm;
+        }
     }
 
     public HealthState getHealthState() {
         return healthState;
     }
 
-    public void setHealthState(String health) {
-        health = health.toUpperCase();
-        this.healthState =
-                health.matches("^(EXCELLENT|E)$") ? HealthState.EXCELLENT :
-                        health.matches("^(GOOD|G)$") ? HealthState.GOOD :
-                                health.matches("^(POOR|P)$") ? HealthState.POOR :
-                                        health.matches("^(CRITICAL|C)$") ? HealthState.CRITICAL :
-                                                HealthState.UNKNOWN;
+    public enum HealthState {
+        EXCELLENT("E"),
+        GOOD("G"),
+        POOR("P"),
+        CRITICAL("C"),
+        UNKNOWN("U");
+
+        private final String shortForm;
+
+        HealthState(String shortForm) {
+            this.shortForm = shortForm;
+        }
+
+        public static String printHealth() {
+            String[] array = new String[Pet.HealthState.values().length];
+            int i = 0;
+            for (HealthState health : HealthState.values()) {
+                array[i++] = health.name() + " (" + health.shortForm.toLowerCase() + ")";
+            }
+            return String.join(" / ", array) + ": ";
+        }
+
+        public static HealthState getHealthFromString(String userInput) {
+            String input = userInput.toUpperCase();
+            for (HealthState state : HealthState.values()) {
+                if (state.name().equals(input) || state.getShortForm().equals(input)) {
+                    return state;
+                }
+            }
+            System.out.println("Unable to parse value '" + userInput + "'. Using default value: " + UNKNOWN);
+            return UNKNOWN;
+        }
+
+        public String getShortForm() {
+            return shortForm;
+        }
     }
 
     public String getRegistrationDate() {

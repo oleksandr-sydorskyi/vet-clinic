@@ -96,29 +96,43 @@ public class Client {
     }
 
     public void setLocation(String location) {
-        this.location = Location.getLocationFromString(location.toUpperCase());
+        this.location = Location.getLocationFromString(location);
     }
 
     public enum Location {
-        KYIV("K"), LVIV("L"), ODESA("O"), UNKNOWN("U");
+        KYIV("K"),
+        LVIV("L"),
+        ODESA("O"),
+        UNKNOWN("U");
 
-        private final String location;
+        private final String shortForm;
 
         Location(String shortForm) {
-            this.location = shortForm;
+            this.shortForm = shortForm;
+        }
+
+        public static String printLocations() {
+            String[] array = new String[Location.values().length];
+            int i = 0;
+            for (Location location : Location.values()) {
+                array[i++] = location.name() + " (" + location.shortForm.toLowerCase() + ")";
+            }
+            return String.join(" / ", array) + ": ";
         }
 
         public static Location getLocationFromString(String userInput) {
+            String input = userInput.toUpperCase();
             for (Location location : Location.values()) {
-                if (userInput.equals(location.name()) || userInput.equals(location.getShortForm())) {
+                if (input.equals(location.name()) || input.equals(location.getShortForm())) {
                     return location;
                 }
             }
-            return Location.UNKNOWN;
+            System.out.println("Unable to parse value '" + userInput + "'. Using default value: " + UNKNOWN);
+            return UNKNOWN;
         }
 
         public String getShortForm() {
-            return location;
+            return shortForm;
         }
     }
 }
