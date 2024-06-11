@@ -19,14 +19,27 @@ public class PetService {
 
     public Pet buildPet(PetType type) {
         Pet pet = type == PetType.DOG ? new Dog() : new Cat();
-        pet.setAge(StringUtils.getInput("Age: "));
-        pet.setName(StringUtils.getInput("Name: "));
-        pet.setSex(StringUtils.getInput("Sex: " + Pet.Sex.printSexes()));
+        pet.setAge(getValidAge(StringUtils.getInput("Age: ")));
+        String name = StringUtils.getInput("Name: ");
+        pet.setName(StringUtils.capitalizeFirstLetter(name));
+        String sex = StringUtils.getInput("Sex: " + Pet.Sex.printSexes());
+        pet.setSex(Pet.Sex.getSexFromString(sex));
         if (pet instanceof Dog) {
-            ((Dog) pet).setSize(StringUtils.getInput("Size: " + Dog.Size.printSizes()));
+            String size = StringUtils.getInput("Size: " + Dog.Size.printSizes());
+            ((Dog) pet).setSize(Dog.Size.getSizeFromString(size));
         }
-        pet.setHealthState(StringUtils.getInput("Health: " + Pet.HealthState.printHealth()));
+        String health = StringUtils.getInput("Health: " + Pet.HealthState.printHealth());
+        pet.setHealthState(Pet.HealthState.getHealthFromString(health));
         return pet;
+    }
+
+    public String getValidAge(String input) {
+        if (input.matches("\\d+")) {
+            return input;
+        } else {
+            System.out.println("Unable to parse value '" + input + "'. Using default value: UNKNOWN");
+            return "UNKNOWN";
+        }
     }
 
     public static void sortPetsByField(List<Pet> pets, String field) {

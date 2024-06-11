@@ -25,7 +25,7 @@ public class Dog extends Pet {
                 ", size = " + getSize() +
                 ", health = " + getHealthState() +
                 ", ownerName = " + getOwnerName() +
-                ", registrationDate = " + getRegistrationDate() +
+                ", registrationDate = " + getRegistrationDate().format(FORMATTER) +
                 "}";
     }
 
@@ -46,8 +46,8 @@ public class Dog extends Pet {
         return size;
     }
 
-    public void setSize(String size) {
-        this.size = Size.getSizeFromString(size);
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     public enum Size {

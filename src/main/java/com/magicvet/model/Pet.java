@@ -1,14 +1,12 @@
 package main.java.com.magicvet.model;
 
-import main.java.com.magicvet.utils.StringUtils;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public abstract class Pet {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
     private PetType type;
     private Sex sex;
@@ -72,25 +70,20 @@ public abstract class Pet {
         return sex;
     }
 
-    public void setSex(String sex) {
-        this.sex = Sex.getSexFromString(sex);
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     public void setAge(String age) {
-        if (age.matches("\\d+")) {
-            this.age = age;
-        } else {
-            this.age = "UNKNOWN";
-            System.out.println("Unable to parse value '" + age + "'. Using default value: UNKNOWN");
-        }
+        this.age = age;
     }
 
     public String getAge() {
         return age;
     }
 
-    public void setHealthState(String health) {
-        this.healthState = HealthState.getHealthFromString(health);
+    public void setHealthState(HealthState health) {
+        this.healthState = health;
     }
 
     public String getName() {
@@ -98,7 +91,7 @@ public abstract class Pet {
     }
 
     public void setName(String name) {
-        this.name = StringUtils.capitalizeFirstLetter(name);
+        this.name = name;
     }
 
     public String getOwnerName() {
@@ -187,7 +180,7 @@ public abstract class Pet {
         }
     }
 
-    public String getRegistrationDate() {
-        return registrationDate.format(FORMATTER);
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
     }
 }

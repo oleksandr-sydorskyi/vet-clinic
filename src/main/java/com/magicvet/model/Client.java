@@ -1,7 +1,5 @@
 package main.java.com.magicvet.model;
 
-import main.java.com.magicvet.utils.StringUtils;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.Objects;
 
 public class Client {
 
-    private static final DateTimeFormatter US_AM_PM_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a MM/dd/yyyy");
+    public static final DateTimeFormatter US_AM_PM_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a MM/dd/yyyy");
 
     private String firstName;
     private String lastName;
@@ -56,7 +54,7 @@ public class Client {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = StringUtils.capitalizeFirstLetter(firstName);
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -64,7 +62,7 @@ public class Client {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = StringUtils.capitalizeFirstLetter(lastName);
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -87,16 +85,16 @@ public class Client {
         pets.add(pet);
     }
 
-    public String getRegistrationDate() {
-        return registrationDate.format(US_AM_PM_FORMATTER);
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
     }
 
     public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = Location.getLocationFromString(location);
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public enum Location {
