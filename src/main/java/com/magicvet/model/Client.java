@@ -1,7 +1,5 @@
 package main.java.com.magicvet.model;
 
-import main.java.com.magicvet.utils.StringUtils;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.Objects;
 
 public class Client {
 
-    private static final DateTimeFormatter US_AM_PM_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a MM/dd/yyyy");
+    public static final DateTimeFormatter US_AM_PM_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a MM/dd/yyyy");
 
     private String firstName;
     private String lastName;
@@ -56,7 +54,7 @@ public class Client {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = StringUtils.capitalizeFirstLetter(firstName);
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -64,7 +62,7 @@ public class Client {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = StringUtils.capitalizeFirstLetter(lastName);
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -87,38 +85,52 @@ public class Client {
         pets.add(pet);
     }
 
-    public String getRegistrationDate() {
-        return registrationDate.format(US_AM_PM_FORMATTER);
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
     }
 
     public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = Location.getLocationFromString(location.toUpperCase());
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public enum Location {
-        KYIV("K"), LVIV("L"), ODESA("O"), UNKNOWN("U");
+        KYIV("K"),
+        LVIV("L"),
+        ODESA("O"),
+        UNKNOWN("U");
 
-        private final String location;
+        private final String shortForm;
 
         Location(String shortForm) {
-            this.location = shortForm;
+            this.shortForm = shortForm;
+        }
+
+        public static String printLocations() {
+            String[] array = new String[Location.values().length];
+            int i = 0;
+            for (Location location : Location.values()) {
+                array[i++] = location.name() + " (" + location.shortForm.toLowerCase() + ")";
+            }
+            return String.join(" / ", array) + ": ";
         }
 
         public static Location getLocationFromString(String userInput) {
+            String input = userInput.toUpperCase();
             for (Location location : Location.values()) {
-                if (userInput.equals(location.name()) || userInput.equals(location.getShortForm())) {
+                if (input.equals(location.name()) || input.equals(location.getShortForm())) {
                     return location;
                 }
             }
-            return Location.UNKNOWN;
+            System.out.println("Unable to parse value '" + userInput + "'. Using default value: " + UNKNOWN);
+            return UNKNOWN;
         }
 
         public String getShortForm() {
-            return location;
+            return shortForm;
         }
     }
 }

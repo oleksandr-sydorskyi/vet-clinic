@@ -10,7 +10,7 @@ public class Dog extends Pet {
         super.setType(PetType.DOG);
     }
 
-    public Dog(String name, String age, String sex, String ownerName, HealthState healthState, Size size) {
+    public Dog(String name, String age, Sex sex, String ownerName, HealthState healthState, Size size) {
         super(PetType.DOG, name, age, sex, ownerName, healthState);
         this.size = size;
     }
@@ -25,7 +25,7 @@ public class Dog extends Pet {
                 ", size = " + getSize() +
                 ", health = " + getHealthState() +
                 ", ownerName = " + getOwnerName() +
-                ", registrationDate = " + getRegistrationDate() +
+                ", registrationDate = " + getRegistrationDate().format(FORMATTER) +
                 "}";
     }
 
@@ -46,12 +46,30 @@ public class Dog extends Pet {
         return size;
     }
 
-    public void setSize(String size) {
-        size = size.toUpperCase();
-        this.size = size.matches("^(XS|S|M|L|XL)$") ? Size.valueOf(size) : Size.UNKNOWN;
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     public enum Size {
-        UNKNOWN, XS, S, M, L, XL
+        XS, S, M, L, XL, UNKNOWN;
+
+        public static String printSizes() {
+            String[] array = new String[Size.values().length];
+            int i = 0;
+            for (Size size : Size.values()) {
+                array[i++] = size.name();
+            }
+            return String.join(" / ", array) + ": ";
+        }
+
+        public static Size getSizeFromString(String userInput) {
+            String input = userInput.toUpperCase();
+            try {
+                return Size.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Unable to parse value '" + userInput + "'. Using default value: " + UNKNOWN);
+            }
+            return UNKNOWN;
+        }
     }
 }

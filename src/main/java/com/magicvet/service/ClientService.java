@@ -10,7 +10,6 @@ public class ClientService {
 
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String NAME_PATTERN = "^[a-zA-Z-]{2,}$";
-    private static final String LOCATION_PATTERN = "(?i)^(Kyiv|k|Lviv|l|Odesa|o)$";
 
     public Client registerNewClient() {
         System.out.println("Please provide client details.");
@@ -24,9 +23,12 @@ public class ClientService {
         Client client = new Client();
         client.setEmail(getValidInput("Email: ", EMAIL_PATTERN, "(e.g. example@example.com)."));
         String nameErrorMessage = "Name must contain 2 or more Latin letters, hyphen (-) is allowed.";
-        client.setFirstName(getValidInput("First name: ", NAME_PATTERN, nameErrorMessage));
-        client.setLastName(getValidInput("Last name: ",NAME_PATTERN, nameErrorMessage));
-        client.setLocation(getValidInput("Location: Kyiv (k) / Lviv (l) / Odesa (o): ", LOCATION_PATTERN, ""));
+        String firstName = getValidInput("First name: ", NAME_PATTERN, nameErrorMessage);
+        client.setFirstName(StringUtils.capitalizeFirstLetter(firstName));
+        String lastName = getValidInput("Last name: ", NAME_PATTERN, nameErrorMessage);
+        client.setLastName(StringUtils.capitalizeFirstLetter(lastName));
+        String location = StringUtils.getInput("Location: " + Client.Location.printLocations());
+        client.setLocation(Client.Location.getLocationFromString(location));
         return client;
     }
 
