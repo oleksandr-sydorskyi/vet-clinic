@@ -65,8 +65,6 @@ public class PetService {
         }
         pets.sort(comparator);
         System.out.println("Sorted by " + field + ":");
-        for (Pet pet : pets) {
-            System.out.println(pet);
-        }
+        pets.forEach(System.out::println);
     }
 }

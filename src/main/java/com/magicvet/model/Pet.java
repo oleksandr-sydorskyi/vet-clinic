@@ -2,7 +2,9 @@ package main.java.com.magicvet.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class Pet {
 
@@ -114,12 +116,9 @@ public abstract class Pet {
         }
 
         public static String printSexes() {
-            String[] array = new String[Sex.values().length];
-            int i = 0;
-            for (Sex sex : Sex.values()) {
-                array[i++] = sex.name() + " (" + sex.shortForm.toLowerCase() + ")";
-            }
-            return String.join(" / ", array) + ": ";
+            return Arrays.stream(Sex.values())
+                    .map(sex -> sex.name() + " (" + sex.shortForm.toLowerCase() + ")")
+                    .collect(Collectors.joining(" / ")) + ": ";
         }
 
         public static Sex getSexFromString(String userInput) {
@@ -156,12 +155,9 @@ public abstract class Pet {
         }
 
         public static String printHealth() {
-            String[] array = new String[Pet.HealthState.values().length];
-            int i = 0;
-            for (HealthState health : HealthState.values()) {
-                array[i++] = health.name() + " (" + health.shortForm.toLowerCase() + ")";
-            }
-            return String.join(" / ", array) + ": ";
+            return Arrays.stream(HealthState.values())
+                    .map(health -> health.name() + " (" + health.shortForm.toLowerCase() + ")")
+                    .collect(Collectors.joining(" / ")) + ": ";
         }
 
         public static HealthState getHealthFromString(String userInput) {

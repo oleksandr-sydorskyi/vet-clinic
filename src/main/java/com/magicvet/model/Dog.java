@@ -1,6 +1,8 @@
 package main.java.com.magicvet.model;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Dog extends Pet {
 
@@ -54,12 +56,9 @@ public class Dog extends Pet {
         XS, S, M, L, XL, UNKNOWN;
 
         public static String printSizes() {
-            String[] array = new String[Size.values().length];
-            int i = 0;
-            for (Size size : Size.values()) {
-                array[i++] = size.name();
-            }
-            return String.join(" / ", array) + ": ";
+            return Arrays.stream(Size.values())
+                    .map(Enum::name)
+                    .collect(Collectors.joining(" / ")) + ": ";
         }
 
         public static Size getSizeFromString(String userInput) {

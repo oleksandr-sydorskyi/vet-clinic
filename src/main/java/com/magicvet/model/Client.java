@@ -3,8 +3,10 @@ package main.java.com.magicvet.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Client {
 
@@ -110,12 +112,9 @@ public class Client {
         }
 
         public static String printLocations() {
-            String[] array = new String[Location.values().length];
-            int i = 0;
-            for (Location location : Location.values()) {
-                array[i++] = location.name() + " (" + location.shortForm.toLowerCase() + ")";
-            }
-            return String.join(" / ", array) + ": ";
+            return Arrays.stream(Location.values())
+                    .map(location -> location.name() + " (" + location.shortForm.toLowerCase() + ")")
+                    .collect(Collectors.joining(" / ")) + ": ";
         }
 
         public static Location getLocationFromString(String userInput) {

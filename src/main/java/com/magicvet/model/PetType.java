@@ -1,5 +1,8 @@
 package main.java.com.magicvet.model;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public enum PetType {
     DOG("D"),
     CAT("C");
@@ -11,12 +14,9 @@ public enum PetType {
     }
 
     public static String printPetTypes() {
-        String[] array = new String[PetType.values().length];
-        int i = 0;
-        for (PetType petType : PetType.values()) {
-            array[i++] = petType.name() + " (" + petType.shortForm.toLowerCase() + ")";
-        }
-        return String.join(" / ", array) + ": ";
+        return Arrays.stream(PetType.values())
+                .map(petType -> petType.name() + " (" + petType.shortForm.toLowerCase() + ")")
+                .collect(Collectors.joining(" / ")) + ": ";
     }
 
     public static PetType getPetTypeFromString(String userInput) {

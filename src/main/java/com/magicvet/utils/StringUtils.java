@@ -2,7 +2,9 @@ package main.java.com.magicvet.utils;
 
 import main.java.com.magicvet.Main;
 
-public class StringUtils {
+public final class StringUtils {
+    private StringUtils() {
+    }
 
     public static String capitalizeFirstLetter(String input) {
         String[] parts = input.split("-");
